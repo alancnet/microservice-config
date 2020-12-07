@@ -26,20 +26,42 @@ const _ = require('lodash');
 const getConfig = (defaults) => {
   const commandLine = subarg(process.argv.slice(2));
   const configFile = commandLine._.find((x) => /\.json$/.test(x));
-  return _.defaultsDeep(
+  let config = _.defaultsDeep(
     // Ability to read deeply and safely
     {
       get: function(key) { return readObj(this, key); }
     },
-    // Priority 1: command line
-    commandLine,
-    // Priority 2: environment variables
-    envObj(),
     // Priority 3: config file
     configFile && JSON.parse(fs.readFileSync(configFile)) || {},
     // Priority 4: defaults
     defaults || {}
   );
+
+
+  // Priority 2: Environment
+  const normalizedEnv = Object.fromEntries(Object.entries(process.env).map(([key, value]) => [key.toLowerCase().split('.').join('_'), value]))
+
+  const fixObj = (obj, prefix = '') => {
+    if (typeof obj !== 'object') return
+    for (const key in obj) {
+      const normalizedKey = `${prefix}${key.toLowerCase()}`
+      if (normalizedEnv[normalizedKey]) {
+        obj[key] = normalizedEnv[normalizedKey]
+      }
+      fixObj(obj[key], `${normalizedKey}_`)
+    }
+  }
+
+  fixObj(config)
+
+  // Priority 1: Command line
+  config = _.defaultsDeep(
+    commandLine,
+    config
+  )
+
+  return config
+
 };
 
 module.exports = getConfig;

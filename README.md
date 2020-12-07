@@ -9,7 +9,7 @@ object into a single deep configuration object.
 The priority is:
 
 1. Command line: `--my.setting=100 --my.otherSetting=200`
-2. Environment:  `export my.setting=100; export my.otherSetting=200;`
+2. Environment:  `export my_setting=100; export my_otherSetting=200;`
 3. Config file:  `{ "my": { "setting": "100", "otherSetting": "200" }}`
 4. Defaults:     `{ my:{ setting: "100", otherSetting: "200" } }`
 
