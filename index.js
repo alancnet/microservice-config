@@ -37,6 +37,7 @@ export function getConfig (defaults) {
     defaults || {}
   );
 
+  if (!config.config) config.config = undefined
 
   // Priority 2: Environment
   const normalizedEnv = Object.fromEntries(Object.entries(process.env).map(([key, value]) => [key.toLowerCase().split('.').join('_'), decode(value)]))
