@@ -15,8 +15,13 @@ import defaultsDeep from 'lodash.defaultsdeep'
   * 3. Config file:  { "my": { "setting": "100", "otherSetting": "200" }}
   * 4. Defaults:     { my:{ setting: "100", otherSetting: "200" } }
   *
-  * In addition, adds a .get(key) function to the main object.
-  * Example: o.get('my.setting') => "100"
+  * A special config key, `config`, may be interpreted differently:
+  * 
+  * - If it ends in `.json`, the value will be interpreted as a path to a JSON file to load.
+  * - If the value is itself a JSON object, it will be parsed and loaded.
+  * 
+  * If supplied, the config json is parsed last, and takes priority top priority
+  * over all other values.
   *
   * @template T
   * @param {T} defaults
@@ -55,13 +60,40 @@ export function getConfig (defaults) {
     config
   )
 
-  return JSON.parse(JSON.stringify(config), (key, value) => decode(value))
+  if (typeof config.config === 'string') {
+    let json = null
+    if (config.config.endsWith('.json')) {
+      if (!fs.existsSync(config.config)) {
+        throw new Error(`Could not find specified config file: ${config.config}`)
+      }
+      json = fs.readFileSync(config.config, 'utf-8')
+    } else {
+      const tmp = config.config.trim()
+      if (tmp.startsWith('{') && tmp.endsWith('}')) {
+        json = config.config
+      }
+    }
 
+    if (json) {
+      // Priority 0: Config file
+      try {
+        const obj = JSON.parse(json)
+        config = defaultsDeep(
+          obj,
+          config
+        )
+      } catch (err) {
+        throw new Error(`Error parsing config JSON: ${err.message}`)
+      }
+    }
+  }
+
+  return JSON.parse(JSON.stringify(config), (key, value) => decode(value))
 }
 
-const trueRegex = /^true|on|yes|enable|enabled$/i
-const falseRegex = /^false|off|no|disable|disabled$/i
-const numberRegex = /^\d+(\.\d+)?(e[-+]\d+)$/i
+const trueRegex = /^(true|on|yes|enable|enabled)$/i
+const falseRegex = /^(false|off|no|disable|disabled)$/i
+const numberRegex = /^\d+(\.\d+)?(e[-+]\d+)?$/i
 
 /**
  * Decodes common string values.
