@@ -1,8 +1,9 @@
 {
   "name": "microservice-config",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Combines the command line, environment variables, a json file, and a default object into a single deep configuration object.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "env-obj": "0.0.2",
-    "lodash": "^4.17.4",
+    "lodash.defaultsdeep": "^4.6.1",
     "subarg": "^1.0.0"
   }
 }

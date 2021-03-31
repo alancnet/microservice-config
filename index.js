@@ -1,7 +1,6 @@
-const subarg = require('subarg');
-const envObj = require('env-obj');
-const fs = require('fs');
-const _ = require('lodash');
+import subarg from 'subarg'
+import fs from 'fs'
+import defaultsDeep from 'lodash.defaultsdeep'
 
 /**
   * Combines the command line, environment variables, a json file, and a default
@@ -23,14 +22,10 @@ const _ = require('lodash');
   * @param {T} defaults
   * @returns {T}
 */
-const getConfig = (defaults) => {
+export function getConfig (defaults) {
   const commandLine = subarg(process.argv.slice(2));
-  const configFile = commandLine._.find((x) => /\.json$/.test(x));
-  let config = _.defaultsDeep(
-    // Ability to read deeply and safely
-    {
-      get: function(key) { return readObj(this, key); }
-    },
+  const configFile = commandLine._.find((x) => /\.json$/.test(x))
+  let config = defaultsDeep(
     // Priority 3: config file
     configFile && JSON.parse(fs.readFileSync(configFile)) || {},
     // Priority 4: defaults
@@ -39,7 +34,7 @@ const getConfig = (defaults) => {
 
 
   // Priority 2: Environment
-  const normalizedEnv = Object.fromEntries(Object.entries(process.env).map(([key, value]) => [key.toLowerCase().split('.').join('_'), value]))
+  const normalizedEnv = Object.fromEntries(Object.entries(process.env).map(([key, value]) => [key.toLowerCase().split('.').join('_'), decode(value)]))
 
   const fixObj = (obj, prefix = '') => {
     if (typeof obj !== 'object') return
@@ -55,13 +50,33 @@ const getConfig = (defaults) => {
   fixObj(config)
 
   // Priority 1: Command line
-  config = _.defaultsDeep(
+  config = defaultsDeep(
     commandLine,
     config
   )
 
-  return config
+  return JSON.parse(JSON.stringify(config), (key, value) => decode(value))
 
-};
+}
 
-module.exports = getConfig;
+const trueRegex = /^true|on|yes|enable|enabled$/i
+const falseRegex = /^false|off|no|disable|disabled$/i
+const numberRegex = /^\d+(\.\d+)?(e[-+]\d+)$/i
+
+/**
+ * Decodes common string values.
+ * 
+ * @param {string} value 
+ * @returns {string|number|boolean}
+ */
+export function decode(value) {
+  if (typeof value === 'string') {
+    if (trueRegex.test(value)) return true
+    if (falseRegex.test(value)) return false
+    if (numberRegex.test(value)) {
+      const float = parseFloat(value)
+      if (!isNaN(float)) return float
+    }
+  }
+  return value
+}
