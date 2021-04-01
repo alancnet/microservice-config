@@ -1,6 +1,6 @@
 {
   "name": "microservice-config",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Combines the command line, environment variables, a json file, and a default object into a single deep configuration object.",
   "main": "index.js",
   "type": "module",
