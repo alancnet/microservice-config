@@ -1,6 +1,6 @@
 {
   "name": "microservice-config",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Combines the command line, environment variables, a json file, and a default object into a single deep configuration object.",
   "main": "index.js",
   "type": "module",
@@ -9,6 +9,7 @@
   },
   "author": "",
   "license": "ISC",
+  "typings": "index.d.ts",
   "dependencies": {
     "env-obj": "0.0.2",
     "lodash.defaultsdeep": "^4.6.1",
