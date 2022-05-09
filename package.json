@@ -1,13 +1,23 @@
 {
   "name": "microservice-config",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Combines the command line, environment variables, a json file, and a default object into a single deep configuration object.",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "exports": {
+    "import": "./src/index.js",
+    "require": "./lib/index.js"
+  },
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src --out-dir lib",
+    "prepublish": "npm run build"
   },
-  "author": "",
+  "author": "Alan Colón",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alancnet/microservice-config.git"
+  },
   "license": "ISC",
   "typings": "index.d.ts",
   "dependencies": {

@@ -2,24 +2,24 @@
 # yarn lockfile v1
 
 
-env-obj@0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/env-obj/-/env-obj-0.0.2.tgz#648c0e8a5d803aa9cd40c6ce457b408e36a4e3de"
-  integrity sha1-ZIwOil2AOqnNQMbORXtAjjak494=
+"env-obj@0.0.2":
+  "integrity" "sha1-ZIwOil2AOqnNQMbORXtAjjak494="
+  "resolved" "https://registry.npmjs.org/env-obj/-/env-obj-0.0.2.tgz"
+  "version" "0.0.2"
 
-lodash.defaultsdeep@^4.6.1:
-  version "4.6.1"
-  resolved "https://registry.yarnpkg.com/lodash.defaultsdeep/-/lodash.defaultsdeep-4.6.1.tgz#512e9bd721d272d94e3d3a63653fa17516741ca6"
-  integrity sha512-3j8wdDzYuWO3lM3Reg03MuQR957t287Rpcxp1njpEa8oDrikb+FwGdW3n+FELh/A6qib6yPit0j/pv9G/yeAqA==
+"lodash.defaultsdeep@^4.6.1":
+  "integrity" "sha512-3j8wdDzYuWO3lM3Reg03MuQR957t287Rpcxp1njpEa8oDrikb+FwGdW3n+FELh/A6qib6yPit0j/pv9G/yeAqA=="
+  "resolved" "https://registry.npmjs.org/lodash.defaultsdeep/-/lodash.defaultsdeep-4.6.1.tgz"
+  "version" "4.6.1"
 
-minimist@^1.1.0:
-  version "1.2.5"
-  resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.5.tgz#67d66014b66a6a8aaa0c083c5fd58df4e4e97602"
-  integrity sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==
+"minimist@^1.1.0":
+  "integrity" "sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw=="
+  "resolved" "https://registry.npmjs.org/minimist/-/minimist-1.2.5.tgz"
+  "version" "1.2.5"
 
-subarg@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/subarg/-/subarg-1.0.0.tgz#f62cf17581e996b48fc965699f54c06ae268b8d2"
-  integrity sha1-9izxdYHplrSPyWVpn1TAauJouNI=
+"subarg@^1.0.0":
+  "integrity" "sha1-9izxdYHplrSPyWVpn1TAauJouNI="
+  "resolved" "https://registry.npmjs.org/subarg/-/subarg-1.0.0.tgz"
+  "version" "1.0.0"
   dependencies:
-    minimist "^1.1.0"
+    "minimist" "^1.1.0"
